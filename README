@@ -1,7 +1,7 @@
 #
 # README
 #
-SYN flood written C++ using Boost.Asio
+SYN flood written in C++ using Boost.Asio
 raw_tcp.hpp: Add a protocol to access raw TCP
 tcp_header.hpp: Define TCP header class
 
