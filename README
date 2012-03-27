@@ -1,4 +1,16 @@
 #
 # README
 #
-SYN flood written C++
+SYN flood written C++ using Boost.Asio
+raw_tcp.hpp: Add a protocol to access raw TCP
+tcp_header.hpp: Define TCP header class
+
+This program is using socket(AF_INET,SOCK_RAW, IPPROTO_TCP)
+    to create raw socket.
+This is incomplete because the reason below.
+[*] After sending TCP SYN packet the Linux Kernel 
+    will send TCP RST packet(against my own will !!) and then, TCP 3 way handshake will be refused.
+To solve this problem, I think, 
+   using a socket(2) system call with IPPROTO_IP is the best way.
+But it's not implemented yet.
+
