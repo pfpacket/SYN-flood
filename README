@@ -8,8 +8,8 @@ tcp_header.hpp   : Define a TCP header class
 This is incomplete because the reason below.
 [*] After sending TCP SYN packet the Linux Kernel will send 
       TCP RST packet(against our own will !!) and then, TCP 3 way handshake will be refused.
-Enabling IPHDRINC is the best way to solve this problem.
-IPHDRINCL is a socket option to access the layer 3 for raw socket
+To enable IPHDRINC is the best way to solve this problem.
+IP_HDRINCL is a socket option to access the layer 3 for raw socket
 Also we are able to forge the source IP address. And all the requirements for SYN flood will be met. 
 But it's not implemented yet.
 

@@ -5,8 +5,11 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/format.hpp>
+#include <boost/system/error_code.hpp>
+#include <boost/system/system_error.hpp>
 #include "raw_tcp.hpp"
 #include "tcp_header.hpp"
+#include "iphdrincl.hpp"
 
 template< typename protocol = boost::asio::ip::tcp >
 std::string hostname_resolver(const char* hostname, std::string hint = "")
@@ -35,6 +38,9 @@ int main(int argc, char **argv)
         boost::asio::ip::raw_tcp::resolver resolver(io_service);
         boost::asio::ip::raw_tcp::resolver::query query(boost::asio::ip::raw_tcp::v4(), argv[2], "");
         boost::asio::ip::raw_tcp::endpoint destination = *resolver.resolve(query);
+        boost::asio::ip::ip_hdrincl iphdrincl;
+        //boost::system::error_code ec;
+        //socket.set_option(iphdrincl, ec);
 
         boost::asio::streambuf request_buffer;
         std::ostream os(&request_buffer);
