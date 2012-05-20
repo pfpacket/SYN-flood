@@ -1,0 +1,125 @@
+execve("./a.out", ["./a.out", "127.0.0.1", "127.0.0.1", "22", "1"], [/* 15 vars */]) = 0
+brk(0)                                  = 0x9089000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7860000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=45297, ...}) = 0
+mmap2(NULL, 45297, PROT_READ, MAP_PRIVATE, 3, 0) = 0xb7854000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/mnt/sda1/boost/lib/libboost_system.so.1.49.0", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0p\f\0\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0777, st_size=20243, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7853000
+mmap2(NULL, 12424, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x762000
+mmap2(0x764000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2) = 0x764000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/usr/lib/libstdc++.so.6", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0`r\4\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0644, st_size=962800, ...}) = 0
+mmap2(NULL, 988044, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x447000
+mmap2(0x52d000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe6) = 0x52d000
+mmap2(0x532000, 25484, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x532000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/tls/i686/cmov/libm.so.6", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0`4\0\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0644, st_size=149392, ...}) = 0
+mmap2(NULL, 151680, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xfaf000
+mmap2(0xfd3000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x23) = 0xfd3000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/libgcc_s.so.1", O_RDONLY)    = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0p#\0\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0644, st_size=116272, ...}) = 0
+mmap2(NULL, 119336, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xe1d000
+mmap2(0xe39000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b) = 0xe39000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/tls/i686/cmov/libpthread.so.0", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0PI\0\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=116920, ...}) = 0
+mmap2(NULL, 98792, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xa6b000
+mmap2(0xa80000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x14) = 0xa80000
+mmap2(0xa82000, 4584, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xa82000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/tls/i686/cmov/libc.so.6", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\260l\1\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1319364, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7852000
+mmap2(NULL, 1329512, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x110000
+mprotect(0x24e000, 4096, PROT_NONE)     = 0
+mmap2(0x24f000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x13e) = 0x24f000
+mmap2(0x252000, 10600, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x252000
+close(3)                                = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7851000
+set_thread_area({entry_number:-1 -> 6, base_addr:0xb78516d0, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
+mprotect(0x24f000, 8192, PROT_READ)     = 0
+mprotect(0xa80000, 4096, PROT_READ)     = 0
+mprotect(0xe39000, 4096, PROT_READ)     = 0
+mprotect(0xfd3000, 4096, PROT_READ)     = 0
+mprotect(0x52d000, 16384, PROT_READ)    = 0
+mprotect(0x764000, 4096, PROT_READ)     = 0
+mprotect(0x8062000, 4096, PROT_READ)    = 0
+mprotect(0x69b000, 4096, PROT_READ)     = 0
+munmap(0xb7854000, 45297)               = 0
+set_tid_address(0xb7851738)             = 5938
+set_robust_list(0xb7851740, 0xc)        = 0
+futex(0xbfd94d80, FUTEX_WAKE_PRIVATE, 1) = 0
+futex(0xbfd94d80, 0x189 /* FUTEX_??? */, 1, NULL, bfd94d90) = -1 EAGAIN (Resource temporarily unavailable)
+rt_sigaction(SIGRTMIN, {0xa6f340, [], SA_SIGINFO}, NULL, 8) = 0
+rt_sigaction(SIGRT_1, {0xa6f820, [], SA_RESTART|SA_SIGINFO}, NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM_INFINITY}) = 0
+uname({sys="Linux", node="winm33-i8671", ...}) = 0
+futex(0x53279c, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+fstat64(1, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb785f000
+write(1, "TCP SYN sender\n", 15TCP SYN sender
+)        = 15
+write(1, "TCP packet with SYN flag: 127.0."..., 60TCP packet with SYN flag: 127.0.0.1 -> 127.0.0.1:22 times=1
+) = 60
+brk(0)                                  = 0x9089000
+brk(0x90aa000)                          = 0x90aa000
+socket(PF_NETLINK, SOCK_RAW, 0)         = 3
+bind(3, {sa_family=AF_NETLINK, pid=0, groups=00000000}, 12) = 0
+getsockname(3, {sa_family=AF_NETLINK, pid=5938, groups=00000000}, [12]) = 0
+time(NULL)                              = 1337451026
+sendto(3, "\24\0\0\0\26\0\1\3\22\342\267O\0\0\0\0\0\0\0\0", 20, 0, {sa_family=AF_NETLINK, pid=0, groups=00000000}, 12) = 20
+recvmsg(3, {msg_name(12)={sa_family=AF_NETLINK, pid=0, groups=00000000}, msg_iov(1)=[{"0\0\0\0\24\0\2\0\22\342\267O2\27\0\0\2\10\200\376\1\0\0\0\10\0\1\0\177\0\0\1"..., 4096}], msg_controllen=0, msg_flags=0}, 0) = 108
+recvmsg(3, {msg_name(12)={sa_family=AF_NETLINK, pid=0, groups=00000000}, msg_iov(1)=[{"@\0\0\0\24\0\2\0\22\342\267O2\27\0\0\n\200\200\376\1\0\0\0\24\0\1\0\0\0\0\0"..., 4096}], msg_controllen=0, msg_flags=0}, 0) = 128
+recvmsg(3, {msg_name(12)={sa_family=AF_NETLINK, pid=0, groups=00000000}, msg_iov(1)=[{"\24\0\0\0\3\0\2\0\22\342\267O2\27\0\0\0\0\0\0\1\0\0\0\24\0\1\0\0\0\0\0"..., 4096}], msg_controllen=0, msg_flags=0}, 0) = 20
+close(3)                                = 0
+write(1, "hostname: 127.0.0.1=127.0.0.1\n", 30hostname: 127.0.0.1=127.0.0.1
+) = 30
+SYS_328(0, 0x80800, 0x250ff4, 0xbfd95a18, 0xbfd95a0e) = 3
+SYS_329(0x80000, 0x80800, 0x9089260, 0xbfd95a18, 0xbfd95a0e) = 4
+timerfd_create(CLOCK_MONOTONIC, 0x80000 /* TFD_??? */) = 5
+epoll_ctl(4, EPOLL_CTL_ADD, 3, {EPOLLIN|EPOLLERR|EPOLLET, {u32=151556752, u64=151556752}}) = 0
+write(3, "\1\0\0\0\0\0\0\0", 8)         = 8
+epoll_ctl(4, EPOLL_CTL_ADD, 5, {EPOLLIN|EPOLLERR, {u32=151556764, u64=151556764}}) = 0
+socket(PF_INET, SOCK_RAW, IPPROTO_TCP)  = 6
+epoll_ctl(4, EPOLL_CTL_ADD, 6, {EPOLLIN|EPOLLPRI|EPOLLOUT|EPOLLERR|EPOLLHUP|EPOLLET, {u32=151556144, u64=151556144}}) = 0
+socket(PF_NETLINK, SOCK_RAW, 0)         = 7
+bind(7, {sa_family=AF_NETLINK, pid=0, groups=00000000}, 12) = 0
+getsockname(7, {sa_family=AF_NETLINK, pid=5938, groups=00000000}, [12]) = 0
+time(NULL)                              = 1337451026
+sendto(7, "\24\0\0\0\26\0\1\3\22\342\267O\0\0\0\0\0\0\0\0", 20, 0, {sa_family=AF_NETLINK, pid=0, groups=00000000}, 12) = 20
+recvmsg(7, {msg_name(12)={sa_family=AF_NETLINK, pid=0, groups=00000000}, msg_iov(1)=[{"0\0\0\0\24\0\2\0\22\342\267O2\27\0\0\2\10\200\376\1\0\0\0\10\0\1\0\177\0\0\1"..., 4096}], msg_controllen=0, msg_flags=0}, 0) = 108
+recvmsg(7, {msg_name(12)={sa_family=AF_NETLINK, pid=0, groups=00000000}, msg_iov(1)=[{"@\0\0\0\24\0\2\0\22\342\267O2\27\0\0\n\200\200\376\1\0\0\0\24\0\1\0\0\0\0\0"..., 4096}], msg_controllen=0, msg_flags=0}, 0) = 128
+recvmsg(7, {msg_name(12)={sa_family=AF_NETLINK, pid=0, groups=00000000}, msg_iov(1)=[{"\24\0\0\0\3\0\2\0\22\342\267O2\27\0\0\0\0\0\0\1\0\0\0\24\0\1\0\0\0\0\0"..., 4096}], msg_controllen=0, msg_flags=0}, 0) = 20
+close(7)                                = 0
+setsockopt(6, SOL_IP, IP_HDRINCL, [1], 4) = 0
+time(NULL)                              = 1337451026
+sendmsg(6, {msg_name(16)={sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, msg_iov(1)=[{"E\0(\0\0\0\0\0 \6\277\376\234I\rt$\373\344A\206Y\0\26\201\264\266&\0\0\0\0"..., 40}], msg_controllen=0, msg_flags=0}, MSG_NOSIGNAL) = 40
+write(1, "\33[100D[*] Sent TCP(SYN) packet t"..., 49[100D[*] Sent TCP(SYN) packet to 127.0.0.1 seq=1) = 49
+close(6)                                = 0
+close(4)                                = 0
+close(5)                                = 0
+close(3)                                = 0
+write(1, "[*] Total: 1 packets sent\n", 26[*] Total: 1 packets sent
+) = 26
+exit_group(0)                           = ?

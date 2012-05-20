@@ -112,6 +112,7 @@ public:
 
     void auto_fill(bool af = true) { auto_fill_ = af; }
     int length() const { return hdrlen_; }
+    static int min_length() { return sizeof(struct tcphdr); }
     const struct tcphdr& get() const { return rep_; }
 
     void compute_checksum() {
