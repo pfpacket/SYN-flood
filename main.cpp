@@ -38,7 +38,7 @@ void set_syn_packet(std::ostream &os,
     iphdr.check();
 
     tcp_header tcp_syn_header(iphdr.address_to_string(iphdr.saddr()), dest);
-    tcp_syn_header.source(32768);
+    tcp_syn_header.source(rand());
     tcp_syn_header.dest(atoi(dport.c_str()));
     tcp_syn_header.doff(20/4);
     tcp_syn_header.syn(true);
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
         std::cerr << std::endl << " [-] Exception: " << e.what() << std::endl;
     } catch( std::string &e ) {
         std::cerr << " [-] Exception: " << e << std::endl;
-        std::cout << "Usage: " << argv[0] << " SRC_IP DEST_IP PORT NUM" << std::endl;
+        std::cout << "Usage: " << argv[0] << " DEST_IP PORT NUM" << std::endl;
     }
     std::cout << "[*] Total: " << i-1 << " packets sent" << std::endl;
     return 0;
