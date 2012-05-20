@@ -16,7 +16,7 @@ main.cpp         : Main program
 
 [*] Requirements
 -------------------------------------------------------------------
-Environments:
+Environment:
     Works on Linux (version 2.0 or higher)
 Compile Time:
     Boost C++ Libraries (Asio)
