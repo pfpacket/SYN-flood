@@ -27,11 +27,12 @@ void set_syn_packet(std::ostream &os,
         std::string dest, std::string dport)
 {    
     ip_header iphdr;
-     
     iphdr.version(4);
     iphdr.ihl(iphdr.length() / 4);
     iphdr.tot_len(iphdr.length() + tcp_header::min_length());
+    iphdr.tos(0x10);
     iphdr.ttl(32);
+    iphdr.frag_off(IP_DF);
     iphdr.protocol(IPPROTO_TCP);
     iphdr.saddr(rand());
     iphdr.daddr(iphdr.address_to_binary(dest));
@@ -55,7 +56,6 @@ int main(int argc, char **argv)
         std::cout << "TCP SYN sender" << std::endl;
         if( argc < 4 )
             throw std::string("Arguments are too few");
-
         std::cout << "TCP packet with SYN flag: " << " -> " << argv[1] << ':' << argv[2] << " times=" << argv[3] << std::endl;
         std::string result = hostname_resolver<boost::asio::ip::raw_tcp>(argv[1]);
         std::cout << "hostname: " << argv[1] << "=" << result << std::endl;
@@ -68,6 +68,8 @@ int main(int argc, char **argv)
         boost::asio::ip::raw_tcp::resolver resolver(io_service);
         boost::asio::ip::raw_tcp::resolver::query query(boost::asio::ip::raw_tcp::v4(), argv[1], "");
         boost::asio::ip::raw_tcp::endpoint destination = *resolver.resolve(query);
+
+        std::cout << "Socket.native_handle() = " << socket.native_handle() << std::endl;
 
         boost::asio::streambuf request_buffer;
         std::ostream os(&request_buffer);

@@ -1,4 +1,4 @@
-CC	 = g++
+CC		 = g++
 CFLAGS	 = -Wall -g -std=c++0x
 LDFLAGS	 =
 INCLUDES = -I${BOOST_DIR}/include/
@@ -7,9 +7,6 @@ TARGET	 = syn-flood
 OBJS	 = main.o
 
 all:	$(TARGET)
-
-test:	$(TARGET)
-	./$(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)

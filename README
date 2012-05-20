@@ -1,17 +1,28 @@
 #
 # README
 #
-SYN flood written in C++ using Boost.Asio
-raw_tcp.hpp      : Add a protocol to access raw TCP for Asio
-tcp_header.hpp   : Define a TCP header class
+
+!! Too Bad Codes (contains test codes). Will be improved someday !!
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[*] SYN flood written in C++ using Boost.Asio
+Files:
+-------------------------------------------------------------------
+raw_tcp.hpp      : Define a protocol to access raw TCP for Asio
+ip_header.hpp    : Define IP header class
+tcp_header.hpp   : Define TCP header class
 iphdrincl.hpp    : Define a socket option to enable IP_HDRINCL
 main.cpp         : Main program
+-------------------------------------------------------------------
 
-This is incomplete because of the reason below.
-[*] After sending TCP SYN packet the Linux Kernel will send 
-      TCP RST packet(against our own will !!) and then, TCP 3 way handshake will be refused.
-To enable IPHDRINC is the best way to solve this problem.
-IP_HDRINCL is a socket option to access the layer 3 for raw socket
-Also we are able to forge the source IP address. And all the requirements for SYN flood will be met. 
-But it's not implemented yet.
+[*] Requirements
+-------------------------------------------------------------------
+Environments:
+    Works on Linux (version 2.0 or higher)
+Compile Time:
+    Boost C++ Libraries (Asio)
+    Some POSIX headers
+    A compiler which can compile C++11 codes
+Run Time:
+    Root or CAP_NET_RAW privilege
+-------------------------------------------------------------------
 
