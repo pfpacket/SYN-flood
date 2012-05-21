@@ -53,22 +53,9 @@
     u_int16_t urg_ptr;
   };
 #endif  //linux
-#include <boost/asio.hpp>
+#include "protocol_header.hpp"
 
-static unsigned short checksum(unsigned short *buf, int bufsz) {
-    unsigned long sum = 0;
-    while( bufsz > 1 ) {
-        sum += *buf++;
-        bufsz -= 2;
-    }
-    if( bufsz == 1 )
-        sum += *(unsigned char *)buf;
-    sum = (sum & 0xffff) + (sum >> 16);
-    sum = (sum & 0xffff) + (sum >> 16);
-    return ~sum;
-}
-
-class tcp_header {
+class tcp_header : public protocol_header {
 public:
   
 	tcp_header() : auto_fill_(false), hdrlen_(sizeof(struct tcphdr)), rep_{0} {}
@@ -112,6 +99,7 @@ public:
 
     void auto_fill(bool af = true) { auto_fill_ = af; }
     int length() const { return hdrlen_; }
+    char* get_header() { return reinterpret_cast<char*>(&rep_); }
     static int min_length() { return sizeof(struct tcphdr); }
     const struct tcphdr& get() const { return rep_; }
 
@@ -132,17 +120,13 @@ public:
         tc.tcphdr = rep_;
         rep_.check = (checksum(reinterpret_cast<unsigned short*>(&tc), sizeof(struct tcp_checksum)));
     }
-    
-    friend std::istream& operator>>(std::istream& is, tcp_header& header) {
-        return is.read(reinterpret_cast<char*>(&(header.rep_)), header.length());
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, tcp_header& header) {
-        if( header.auto_fill_ ) {
-            header.doff( header.length() / 4 );
-            header.compute_checksum();
+protected:
+    void prepare_to_read(std::istream &is) {} 
+    void prepare_to_write(std::ostream &os) {
+        if( auto_fill_ ) {
+            doff( length() / 4 );
+            compute_checksum();
         }
-        return os.write(reinterpret_cast<char*>(&(header.rep_)), header.length());
     }
 
 private:
@@ -169,7 +153,7 @@ private:
     struct tcp_checksum {
             struct tcph_pseudo pseudo;
             struct tcphdr tcphdr;
-     };
+    };
     
     bool auto_fill_;
     int hdrlen_;

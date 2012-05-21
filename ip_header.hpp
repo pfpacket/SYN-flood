@@ -5,7 +5,8 @@
 #include <string>
 #include <netdb.h>
 #include <netinet/ip.h>
-#include <boost/asio.hpp>
+#include <boost/asio/ip/address.hpp>
+#include "protocol_header.hpp"
 
 //
 // Define a ip header class
@@ -36,7 +37,7 @@ struct iphdr
   };
 */
 
-class ip_header {
+class ip_header : public protocol_header {
 public:
     ip_header() : rep_{0} {}
     ~ip_header() {}
@@ -66,38 +67,15 @@ public:
     void saddr(u_int32_t saddr) { rep_.saddr = htonl(saddr); }
     void daddr(u_int32_t daddr) { rep_.daddr = htonl(daddr); }
 
-    static int length() { return sizeof(struct iphdr); }
-
-    friend std::istream& operator>>(std::istream& is, ip_header& header) {
-        return is.read(reinterpret_cast<char*>(&(header.rep_)), header.length());
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, ip_header& header) {
-        return os.write(reinterpret_cast<char*>(&(header.rep_)), header.length());
-    }
-   
-    u_int32_t address_to_binary(std::string &straddr) {
-        return boost::asio::ip::address_v4::from_string(straddr).to_ulong();
-    } 
+    int length() const { return sizeof(rep_); }
+    char *get_header() { return reinterpret_cast<char*>(&rep_); }
      
-    std::string address_to_string(u_int32_t binaddr) {
-        return boost::asio::ip::address_v4(binaddr).to_string();
-    } 
-
+protected:
+    void prepare_to_read(std::istream &is) {}
+    void prepare_to_write(std::ostream &os) {}
+     
 private:
-    static unsigned short checksum(unsigned short *buf, int bufsz) {
-      unsigned long sum = 0;
-        while( bufsz > 1 ) {
-            sum += *buf++;
-            bufsz -= 2;
-        }
-        if( bufsz == 1 )
-            sum += *(unsigned char *)buf;
-        sum = (sum & 0xffff) + (sum >> 16);
-        sum = (sum & 0xffff) + (sum >> 16);
-        return ~sum;
-    }
-    struct iphdr rep_;
+   struct iphdr rep_;
 }; 
  
 #endif // IP_HEADER_HPP
