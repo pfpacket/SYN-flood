@@ -4,14 +4,16 @@
 
 !! Too Bad Codes (contains test codes). Will be improved someday !!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 [*] SYN flood written in C++ using Boost.Asio
 Files:
 -------------------------------------------------------------------
-raw_tcp.hpp      : Define a protocol to access raw TCP for Asio
-ip_header.hpp    : Define IP header class
-tcp_header.hpp   : Define TCP header class
-iphdrincl.hpp    : Define a socket option to enable IP_HDRINCL
-main.cpp         : Main program
+raw_tcp.hpp         : Define a protocol to access raw TCP for Asio
+protocol_header.hpp : Define a base class of each protocol headers
+ip_header.hpp       : Define IP header class
+tcp_header.hpp      : Define TCP header class
+iphdrincl.hpp       : Define a socket option to enable IP_HDRINCL
+main.cpp            : Main program
 -------------------------------------------------------------------
 
 [*] Requirements
