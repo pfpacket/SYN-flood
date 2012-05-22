@@ -16,7 +16,7 @@ public:
     virtual int length() const = 0;
     virtual char *get_header() = 0;
     
-    static u_int32_t address_to_binary(std::string &straddr) {
+    static u_int32_t address_to_binary(std::string &&straddr) {
         return boost::asio::ip::address_v4::from_string(straddr).to_ulong();
     } 
      
