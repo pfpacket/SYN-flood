@@ -57,7 +57,9 @@
 
 class tcp_header : public protocol_header {
 public:
-  
+ 
+   typedef struct tcphdr header_type;
+
 	tcp_header() : auto_fill_(false), hdrlen_(sizeof(struct tcphdr)), rep_{0} {}
 	tcp_header(std::string srcaddr, std::string dstaddr) : auto_fill_(true),
         hdrlen_(sizeof(struct tcphdr)), saddr_(srcaddr), daddr_(dstaddr), rep_{0} {}
@@ -100,7 +102,6 @@ public:
     void auto_fill(bool af = true) { auto_fill_ = af; }
     int length() const { return hdrlen_; }
     char* get_header() { return reinterpret_cast<char*>(&rep_); }
-    static int min_length() { return sizeof(struct tcphdr); }
     const struct tcphdr& get() const { return rep_; }
 
     void compute_checksum() {
@@ -118,7 +119,7 @@ public:
         tc.pseudo.protocol = IPPROTO_TCP;
         tc.pseudo.length   = htons(sizeof(tcphdr));
         tc.tcphdr = rep_;
-        rep_.check = (checksum(reinterpret_cast<unsigned short*>(&tc), sizeof(struct tcp_checksum)));
+        check((checksum(reinterpret_cast<unsigned short*>(&tc), sizeof(struct tcp_checksum))));
     }
 protected:
     void prepare_to_read(std::istream &is) {} 

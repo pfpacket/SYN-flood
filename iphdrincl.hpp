@@ -21,7 +21,7 @@ public:
     ~ip_hdrincl() {}
 
     template<typename Protocol>
-    int level(Protocol p) const { return IPPROTO_IP; }
+    int level(Protocol p) const { return SOL_IP; }
 
     template<typename Protocol>
     int name(Protocol p)  const { return IP_HDRINCL; }

@@ -1,11 +1,8 @@
 #
 # README
 #
-
-!! Too Bad Codes (contains test codes). Will be improved someday !!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-[*] SYN flood written in C++ using Boost.Asio
+#   [*] SYN flood written in C++ using Boost.Asio
+#   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Files:
 -------------------------------------------------------------------
 raw_tcp.hpp         : Define a protocol to access raw TCP for Asio

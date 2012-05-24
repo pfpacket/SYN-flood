@@ -27,9 +27,9 @@ void set_syn_packet(std::ostream &os, std::string dest, std::string dport)
 {    
     ip_header iphdr;
     iphdr.version(4);
-    iphdr.ihl(iphdr.length() / 4);
+    iphdr.ihl(iphdr.length() / ip_header::IP_LENGTH_UNIT);
     iphdr.tos(0x10);
-    iphdr.ttl(32);
+    iphdr.ttl(ip_header::IP_DEFAULT_TTL);
     iphdr.frag_off(IP_DF);
     iphdr.protocol(IPPROTO_TCP);
     iphdr.saddr(rand());
@@ -77,8 +77,8 @@ int main(int argc, char **argv)
             socket.send_to(request_buffer.data(), destination);
             std::cout << "\033[100D" << "[*] Sent TCP(SYN) packet to " << result << " seq=" << i << std::flush;
             request_buffer.consume(request_buffer.size());
-            io_service.run();
-            io_service.reset();
+//            io_service.run();
+//            io_service.reset();
         }
     } catch( std::exception &e ) {
         std::cerr << std::endl << "[-] Exception: " << e.what() << std::endl;
