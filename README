@@ -11,6 +11,7 @@ ip_header.hpp       : Define IP header class
 tcp_header.hpp      : Define TCP header class
 iphdrincl.hpp       : Define a socket option to enable IP_HDRINCL
 main.cpp            : Main program
+.gitignore          : Listing files to ignore
 -------------------------------------------------------------------
 
 [*] Requirements
