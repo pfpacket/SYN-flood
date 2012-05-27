@@ -2,7 +2,7 @@ CXX         = g++
 CXXFLAGS    = -Wall -std=c++0x
 LDFLAGS     =
 INCLUDES    = -I${BOOST_DIR}/include/
-LIBS        = -L${BOOST_DIR}/lib -pedantic -pthread -lboost_system -lboost_program_options
+LIBS        = -L${BOOST_DIR}/lib -pedantic -pthread ${BOOST_DIR}/lib/libboost_system.a ${BOOST_DIR}/lib/libboost_program_options.a
 TARGET      = syn-flood
 SRC_DIR     = src
 OBJS        = ${SRC_DIR}/main.o
