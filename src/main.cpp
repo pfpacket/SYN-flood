@@ -28,8 +28,8 @@ void set_syn_packet(std::ostream &os, std::string dest, std::string dport)
     iphdr.version(4);
     iphdr.ihl(iphdr.length() / ip_header::IP_LENGTH_UNIT);
     iphdr.tos(0x10);
-    iphdr.ttl(ip_header::IP_DEFAULT_TTL);
     iphdr.frag_off(IP_DF);
+    iphdr.ttl(ip_header::IP_DEFAULT_TTL);
     iphdr.protocol(IPPROTO_TCP);
     iphdr.saddr(rand());
     iphdr.daddr(iphdr.address_to_binary(dest));
@@ -37,10 +37,10 @@ void set_syn_packet(std::ostream &os, std::string dest, std::string dport)
     tcp_header tcp_syn_header(iphdr.address_to_string(iphdr.saddr()), dest);
     tcp_syn_header.source(rand());
     tcp_syn_header.dest(std::atoi(dport.c_str()));
+    tcp_syn_header.seq(rand());
     tcp_syn_header.doff(20/4);
     tcp_syn_header.syn(true);
-    tcp_syn_header.seq(0x81b4b626);
-    tcp_syn_header.window(32792);
+    tcp_syn_header.window(tcp_header::DEFAULT_WINVAL);
      
     iphdr.tot_len(iphdr.length() + tcp_syn_header.length());
     iphdr.check();

@@ -58,6 +58,7 @@
 class tcp_header : public protocol_header {
 public:
  
+   enum { DEFAULT_WINVAL = 4096 };
    typedef struct tcphdr header_type;
 
 	tcp_header() : auto_fill_(false), hdrlen_(sizeof(struct tcphdr)), rep_{0} {}
@@ -119,7 +120,7 @@ public:
         tc.pseudo.protocol = IPPROTO_TCP;
         tc.pseudo.length   = htons(sizeof(tcphdr));
         tc.tcphdr = rep_;
-        check((checksum(reinterpret_cast<unsigned short*>(&tc), sizeof(struct tcp_checksum))));
+        rep_.check = ((checksum(reinterpret_cast<unsigned short*>(&tc), sizeof(struct tcp_checksum))));
     }
 protected:
     void prepare_to_read(std::istream &is) {} 
