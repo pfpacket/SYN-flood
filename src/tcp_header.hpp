@@ -29,11 +29,10 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#ifdef __linux
-#include <netinet/tcp.h>
 #include <netdb.h>
-#else
-#include <winsock2.h>
+#include <netinet/tcp.h>
+// For struct tcphdr
+/*
    struct tcphdr {
     u_int16_t source;
     u_int16_t dest;
@@ -52,7 +51,7 @@
     u_int16_t check;
     u_int16_t urg_ptr;
   };
-#endif  //linux
+*/
 #include "protocol_header.hpp"
 
 class tcp_header : public protocol_header {
@@ -111,7 +110,7 @@ public:
         compute_checksum(saddr_, daddr_);
     }
         
-    void compute_checksum(std::string srcaddr, std::string destaddr) {
+    void compute_checksum(const std::string &srcaddr, const std::string &destaddr) {
         check(0);
         tcp_checksum tc = { {0}, {0} };
         tc.pseudo.ip_src   = htonl(boost::asio::ip::address_v4::from_string(srcaddr).to_ulong());
