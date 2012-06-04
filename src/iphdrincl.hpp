@@ -1,6 +1,6 @@
 //
 // ip_hdrincl.hpp
-// Enable IP_HDRINCL of raw socket
+// IP_HDRINCL of raw socket
 // This is available only for basic_raw_socket
 //
 #ifndef BOOST_ASIO_IP_HDRINCL_SOCKOPT
@@ -13,26 +13,26 @@ namespace boost {
 namespace asio {
 namespace ip {
     
-// This meets SettableSocketOption requirement
+// This meets SettableSocketOption requirements
 // See the documents of Boost.Asio for more information
 class ip_hdrincl {
 public:
-    ip_hdrincl() : one(1) {}
+    ip_hdrincl(bool ov = true) : optval(ov ? 1 : 0) {}
     ~ip_hdrincl() {}
 
     template<typename Protocol>
-    int level(Protocol p) const { return SOL_IP; }
+    int level(const Protocol &p) const { return SOL_IP; }
 
     template<typename Protocol>
-    int name(Protocol p)  const { return IP_HDRINCL; }
+    int name(const Protocol &p)  const { return IP_HDRINCL; }
 
     template<typename Protocol>
-    const void *data(Protocol p) const { return reinterpret_cast<const void*>(&one); }
+    const void *data(const Protocol &p) const { return reinterpret_cast<const void*>(&optval); }
 
     template<typename Protocol>
-    int size(Protocol p) const { return sizeof(one); }
+    int size(const Protocol &p) const { return sizeof(optval); }
 private:
-    int one;
+    int optval;
 };
 
 } // namespace ip
