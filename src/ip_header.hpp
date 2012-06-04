@@ -36,13 +36,7 @@ struct iphdr
     // The options start here.
   };
 */
-//
-// TODO: Support for TCP header options
-// Ideas:
-//  enable_options(bool tcp_opt = true) {}
-//  option_mss(int mss = 1500) {  }
-//
-//
+
 class ip_header : public protocol_header {
 public:
     enum { IP_LENGTH_UNIT = 4, IP_DEFAULT_TTL = IPDEFTTL }; 
