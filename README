@@ -16,9 +16,9 @@ main.cpp            : Main program
 [*] Requirements
 -------------------------------------------------------------------
 Environment:
-    Works on Linux (version 2.0 or higher)
+    May works on Linux (version 2.0 or higher)
 Compile Time:
-    Boost C++ Libraries (Asio)
+    Boost C++ Libraries
     Some POSIX headers
     A compiler which can compile C++11 codes
         (This repo contains a few C++11 codes)

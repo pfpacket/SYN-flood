@@ -73,10 +73,6 @@ public:
     int length() const { return sizeof(rep_); }
     char *get_header() { return reinterpret_cast<char*>(&rep_); }
      
-protected:
-    void prepare_to_read(std::istream &is) {}
-    void prepare_to_write(std::ostream &os) {}
-     
 private:
    struct iphdr rep_;
 }; 

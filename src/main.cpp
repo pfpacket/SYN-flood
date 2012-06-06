@@ -7,9 +7,8 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/ini_parser.hpp>
 #include <boost/optional.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/program_options.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/system/system_error.hpp>
@@ -18,6 +17,8 @@
 #include "tcp_header.hpp"
 #include "iphdrincl.hpp"
 
+using boost::lexical_cast;
+namespace posix_time = boost::posix_time;
 using namespace boost::program_options;
 using namespace boost::property_tree;
 
@@ -45,7 +46,7 @@ void set_syn_segment(std::ostream &os, std::map<std::string, std::string> &argma
 
     tcp_header tcp_syn_header(iphdr.address_to_string(iphdr.saddr()), argmap["target"]);
     tcp_syn_header.source(rand());
-    tcp_syn_header.dest(boost::lexical_cast<int>(argmap["port"]));
+    tcp_syn_header.dest(lexical_cast<int>(argmap["port"]));
     tcp_syn_header.seq(rand());
     tcp_syn_header.doff(20/4);
     tcp_syn_header.syn(true);
@@ -61,25 +62,31 @@ void get_options(int argc, char **argv,
 {
     options_description opt("Options");
     opt.add_options()
-        ("num,n",    value<std::string>(), "set a time to send")
-        ("port,p",   value<std::string>(), "set a target port number")
-        ("source,s", value<std::string>(), "set specified address as source address of IP header")
-        ("target,t", value<std::string>(), "set a target host")
-        ("help,h",   "display this help and exit");
+        ("delay,d",     value<std::string>(), "set a delay in ms")
+        ("no-output,o", "never display the output to show the progress")
+        ("num,n",       value<std::string>(), "set a time to send")
+        ("port,p",      value<std::string>(), "set a target port number")
+        ("source,s",    value<std::string>(), "set specified address as source address of IP header")
+        ("target,t",    value<std::string>(), "set a target host")
+        ("help,h",      "display this help and exit");
     variables_map vmap;
     store(parse_command_line(argc, argv, opt), vmap);
     notify(vmap);
     if( vmap.count("help") || !vmap.count("port") || !vmap.count("target") ) {
         std::cout << "Usage: " << argv[0] 
-            << " -p PORT -t DEST_HOST [options...]" << std::endl << opt << std::endl;
+            << " -t DEST_HOST -p PORT [options...]" << std::endl << opt << std::endl;
         exit(0);
     }
     argmap["port"] = vmap["port"].as<std::string>();
     argmap["target"] = hostname_resolver(vmap["target"].as<std::string>());
-    if( vmap.count("source") )
-        argmap["source"] = hostname_resolver(vmap["source"].as<std::string>());
+    if( vmap.count("delay") )
+        argmap["delay"] = vmap["delay"].as<std::string>();
+    if( vmap.count("no-output") )
+        argmap["no-output"] = "true";
     if( vmap.count("num") )
         argmap["num"] = vmap["num"].as<std::string>();
+    if( vmap.count("source") )
+        argmap["source"] = hostname_resolver(vmap["source"].as<std::string>());
 }
  
 int main(int argc, char **argv)
@@ -103,10 +110,16 @@ int main(int argc, char **argv)
 
         boost::asio::streambuf request_buffer;
         std::ostream os(&request_buffer);
-        for( ; i < boost::lexical_cast<int>(argmap["num"]); ++i ) {
+        for( ; i < lexical_cast<int>(argmap["num"]); ++i ) {
             set_syn_segment(os, argmap);
+            if( !argmap["delay"].empty() ) {
+                boost::asio::deadline_timer 
+                    timer(io_service, posix_time::milliseconds(lexical_cast<long>(argmap["delay"])));
+                timer.wait();
+            }
             socket.send_to(request_buffer.data(), destination);
-            std::cout << '.' << std::flush;
+            if( argmap["no-output"].empty() ) 
+                std::cout << '.' << std::flush;
             request_buffer.consume(request_buffer.size());
         }
         std::cout << std::endl;

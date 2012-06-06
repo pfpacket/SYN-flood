@@ -3,16 +3,7 @@
 #
 # Listing files to ignore
 #
-
-# Swap files
 *.swp       
-
-# Backup files 
-*~          
-
-# Executable
-syn-flood   
-
-# Temporary object files
 src/*.o     
+syn-flood   
  

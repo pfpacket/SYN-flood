@@ -122,7 +122,6 @@ public:
         rep_.check = ((checksum(reinterpret_cast<unsigned short*>(&tc), sizeof(struct tcp_checksum))));
     }
 protected:
-    void prepare_to_read(std::istream &is) {} 
     void prepare_to_write(std::ostream &os) {
         if( auto_fill_ ) {
             doff( length() / 4 );

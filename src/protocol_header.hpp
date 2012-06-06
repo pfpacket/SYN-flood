@@ -41,8 +41,8 @@ protected:
         return ~sum;
     }
      
-    virtual void prepare_to_read(std::istream&) = 0;
-    virtual void prepare_to_write(std::ostream&) = 0;
+    virtual void prepare_to_read(std::istream&) {}
+    virtual void prepare_to_write(std::ostream&) {}
 };
 
 inline std::istream& operator>>(std::istream& is, protocol_header& header) {
