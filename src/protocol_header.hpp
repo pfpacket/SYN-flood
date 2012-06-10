@@ -24,8 +24,8 @@ public:
         return boost::asio::ip::address_v4(binaddr).to_string();
     } 
      
-    friend std::istream& operator>>(std::istream& is, protocol_header& header);
-    friend std::ostream& operator<<(std::ostream& os, protocol_header& header);
+    friend std::istream& operator>>(std::istream &is, protocol_header &header);
+    friend std::ostream& operator<<(std::ostream &os, protocol_header &header);
 
 protected:    
     static unsigned short checksum(unsigned short *buf, int bufsz) {

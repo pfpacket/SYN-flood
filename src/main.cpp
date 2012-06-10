@@ -19,6 +19,7 @@
 
 using boost::lexical_cast;
 namespace posix_time = boost::posix_time;
+using namespace boost::asio::ip;
 using namespace boost::program_options;
 using namespace boost::property_tree;
 
@@ -102,20 +103,20 @@ int main(int argc, char **argv)
             << argmap["target"] << ':' << argmap["port"] << " times=" << argmap["num"] << std::endl;
         
         boost::asio::io_service io_service;
-        boost::asio::ip::raw_tcp::socket socket(io_service, boost::asio::ip::raw_tcp::v4());
+        raw_tcp::socket socket(io_service, raw_tcp::v4());
         //boost::system::error_code ec;
         socket.set_option(boost::asio::ip::ip_hdrincl(true));
-        boost::asio::ip::raw_tcp::resolver resolver(io_service);
-        boost::asio::ip::raw_tcp::resolver::query query(boost::asio::ip::raw_tcp::v4(), argmap["target"], "");
-        boost::asio::ip::raw_tcp::endpoint destination = *resolver.resolve(query);
+        raw_tcp::resolver resolver(io_service);
+        raw_tcp::resolver::query query(raw_tcp::v4(), argmap["target"], "");
+        raw_tcp::endpoint destination = *resolver.resolve(query);
 
         boost::asio::streambuf request_buffer;
         std::ostream os(&request_buffer);
+        boost::asio::deadline_timer timer(io_service); 
         for( ; i < lexical_cast<int>(argmap["num"]); ++i ) {
             set_syn_segment(os, argmap);
             if( !argmap["delay"].empty() ) {
-                boost::asio::deadline_timer 
-                    timer(io_service, posix_time::milliseconds(lexical_cast<long>(argmap["delay"])));
+                timer.expires_from_now(posix_time::milliseconds(lexical_cast<long>(argmap["delay"])));
                 timer.wait();
             }
             socket.send_to(request_buffer.data(), destination);
