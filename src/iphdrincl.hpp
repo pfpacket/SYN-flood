@@ -17,7 +17,8 @@ namespace ip {
 // See the documents of Boost.Asio for more information
 class ip_hdrincl {
 public:
-    ip_hdrincl(bool ov = true) : optval(ov ? 1 : 0) {}
+    ip_hdrincl() : optval(1) {}
+    ip_hdrincl(bool ov) : optval(ov ? 1 : 0) {}
     ~ip_hdrincl() {}
 
     template<typename Protocol>
@@ -31,6 +32,7 @@ public:
 
     template<typename Protocol>
     int size(const Protocol &p) const { return sizeof(optval); }
+     
 private:
     int optval;
 };

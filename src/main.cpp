@@ -44,13 +44,14 @@ void set_syn_segment(std::ostream &os, std::map<std::string, std::string> &argma
     iphdr.saddr(argmap["source"].empty() ? rand() : ip_header::address_to_binary(argmap["source"]));
     iphdr.daddr(ip_header::address_to_binary(argmap["target"]));
 
-    tcp_header tcp_syn_header(iphdr.address_to_string(iphdr.saddr()), argmap["target"]);
+    tcp_header tcp_syn_header;
     tcp_syn_header.source(rand());
     tcp_syn_header.dest(lexical_cast<int>(argmap["port"]));
     tcp_syn_header.seq(rand());
     tcp_syn_header.doff(20/4);
     tcp_syn_header.syn(true);
     tcp_syn_header.window(tcp_header::DEFAULT_WINVAL);
+    tcp_syn_header.compute_checksum(iphdr.saddr(), iphdr.daddr());
      
     iphdr.tot_len(iphdr.length() + tcp_syn_header.length());
     iphdr.check();
@@ -66,7 +67,7 @@ void get_options(int argc, char **argv,
         ("no-output,o", "never display the output to show the progress")
         ("num,n",       value<std::string>(), "set a time to send")
         ("port,p",      value<std::string>(), "set a target port number")
-        ("source,s",    value<std::string>(), "set specified address as source address of IP header")
+        ("source,s",    value<std::string>(), "use specified address as source address of IP header")
         ("target,t",    value<std::string>(), "set a target host")
         ("help,h",      "display this help and exit");
     variables_map vmap;

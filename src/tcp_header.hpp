@@ -29,6 +29,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <cstdint>
 #include <netdb.h>
 #include <netinet/tcp.h>
 // For struct tcphdr
@@ -57,12 +58,11 @@
 class tcp_header : public protocol_header {
 public:
  
-   enum { DEFAULT_WINVAL = 4096 };
-   typedef struct tcphdr header_type;
+    enum { DEFAULT_WINVAL = 4096 };
+    typedef struct tcphdr header_type;
 
-	tcp_header() : auto_fill_(false), hdrlen_(sizeof(struct tcphdr)), rep_{0} {}
-	tcp_header(std::string srcaddr, std::string dstaddr) : auto_fill_(true),
-        hdrlen_(sizeof(struct tcphdr)), saddr_(srcaddr), daddr_(dstaddr), rep_{0} {}
+    tcp_header() : rep_{0} {}
+    explicit tcp_header(const header_type &tcph) : rep_(tcph) {}
     ~tcp_header() {}
 
     unsigned char source() const { return ntohs(rep_.source); }
@@ -99,34 +99,27 @@ public:
     void check(unsigned short check) { rep_.check = htons(check); }
     void urg_ptr(unsigned short urg_ptr) { rep_.urg_ptr = htons(urg_ptr); }
 
-    void auto_fill(bool af = true) { auto_fill_ = af; }
-    int length() const { return hdrlen_; }
+    int length() const { return sizeof(rep_); }
     char* get_header() { return reinterpret_cast<char*>(&rep_); }
     const struct tcphdr& get() const { return rep_; }
 
-    void compute_checksum() {
-        if( !saddr_.length() || !daddr_.length() )
-            throw std::runtime_error("Source or destination address is empty");
-        compute_checksum(saddr_, daddr_);
-    }
-        
-    void compute_checksum(const std::string &srcaddr, const std::string &destaddr) {
+    void compute_checksum(uint32_t srcaddr, uint32_t destaddr) {
         check(0);
-        tcp_checksum tc = { {0}, {0} };
-        tc.pseudo.ip_src   = htonl(boost::asio::ip::address_v4::from_string(srcaddr).to_ulong());
-        tc.pseudo.ip_dst   = htonl(boost::asio::ip::address_v4::from_string(destaddr).to_ulong());
+        tcp_checksum tc = {{0}, {0}};
+        tc.pseudo.ip_src   = htonl(srcaddr);
+        tc.pseudo.ip_dst   = htonl(destaddr);
         tc.pseudo.zero     = 0;
         tc.pseudo.protocol = IPPROTO_TCP;
         tc.pseudo.length   = htons(sizeof(tcphdr));
         tc.tcphdr = rep_;
         rep_.check = ((checksum(reinterpret_cast<unsigned short*>(&tc), sizeof(struct tcp_checksum))));
     }
-protected:
-    void prepare_to_write(std::ostream &os) {
-        if( auto_fill_ ) {
-            doff( length() / 4 );
-            compute_checksum();
-        }
+
+    void compute_checksum(const std::string &srcaddr, const std::string &destaddr) {
+        compute_checksum(
+                boost::asio::ip::address_v4::from_string(srcaddr).to_ulong(), 
+                boost::asio::ip::address_v4::from_string(destaddr).to_ulong()
+                );
     }
 
 private:
@@ -142,23 +135,20 @@ private:
     //
     //       TCP PSEUDO HEADER FROM RFC 793
     //
-    struct tcph_pseudo {      // TCP pseudo header for header checksum
-            unsigned int ip_src;        // Source IP address
-            unsigned int ip_dst;        // Destination IP address
-            unsigned int zero:8;        // Always 0
-            unsigned int protocol:8;    // IPPROTO_TCP
-            unsigned int length:16;     // tcp header length + payload length (Not contained pseudo header)
+    struct tcph_pseudo {    // TCP pseudo header for header checksum
+            uint32_t ip_src;    // Source IP address
+            uint32_t ip_dst;    // Destination IP address
+            uint8_t zero;      // Always 0
+            uint8_t  protocol;  // IPPROTO_TCP
+            uint16_t length;    // tcp header length + payload length (Not contained pseudo header)
     };
 
     struct tcp_checksum {
             struct tcph_pseudo pseudo;
-            struct tcphdr tcphdr;
+            header_type tcphdr;
     };
     
-    bool auto_fill_;
-    int hdrlen_;
-    std::string saddr_, daddr_;
-    struct tcphdr rep_;
+    header_type rep_;
 };
 
 #endif  // TCP_HEADER_HPP

@@ -9,8 +9,6 @@
 #include <boost/asio/ip/basic_resolver_iterator.hpp>
 #include <boost/asio/ip/basic_resolver_query.hpp>
 #include <sys/socket.h>
-#include <netpacket/packet.h>
-
 
 #include <boost/asio/detail/push_options.hpp>
 

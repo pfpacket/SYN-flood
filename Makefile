@@ -11,7 +11,7 @@ all:  $(TARGET)
 rebuild:  clean all
 	
 clean:
-	-rm -f $(TARGET) $(OBJS)
+	rm -f $(TARGET) $(OBJS)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
